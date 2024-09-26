@@ -1,0 +1,20 @@
+/* #newContainer {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.odd {
+    flex-basis: 20%;
+    margin: 1ex;
+    padding: 1ex;
+    background-color: aqua;
+    border: 0.125rem solid blue
+}
+
+.even {
+    flex-basis: 20%;
+    margin: 1ex;
+    padding: 1ex;
+    background-color: yellow;
+    border: 0.125rem solid red; 
+} */

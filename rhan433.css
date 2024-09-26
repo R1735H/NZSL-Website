@@ -1,0 +1,218 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f8f8f8;
+}
+
+header {
+    background-color: white;
+    padding: 10px;
+    border-bottom: 3px solid #e0e0e0;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    margin: 5px;
+    padding: 0;
+    align-items: center;
+}
+
+.nav-links li {
+    display: inline;
+}
+
+.nav-links li:hover {
+    text-decoration: underline;
+    cursor: pointer;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: black;
+    font-weight: bold;
+}
+
+.auth-buttons {
+    display: flex;
+    gap: 10px;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.auth-buttons>div:first-child {
+    display: flex;
+    justify-content: center;
+}
+
+.auth-buttons>div:last-child {
+    display: flex;
+    gap: 10px;
+}
+
+.auth-buttons button {
+    padding: 10px 20px;
+    border: 1px solid #333;
+    background-color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+
+.auth-buttons img {
+    width: 100px;
+    margin-bottom: 20px;
+}
+
+.auth-buttons button:hover {
+    background-color: #e0e0e0;
+}
+
+
+.auth-buttons .register {
+    background-color: black;
+    color: white;
+}
+
+.auth-buttons .register:hover {
+    background-color: #333;
+}
+
+.main-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80vh;
+    padding: 60px;
+    background-color: white;
+    margin: 20px auto;
+    max-width: 900px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+#imgLogo {
+    width: 100px;
+}
+
+.content-wrapper {
+    text-align: center;
+}
+
+.main-content h1 {
+    font-size: 4rem;
+    margin-bottom: 10px;
+}
+
+.main-content h2 {
+    font-size: 2rem;
+    color: grey;
+    margin-bottom: 40px;
+}
+
+footer {
+    padding: 20px;
+    background-color: white;
+    border-top: 1px solid #e0e0e0;
+    margin-top: 40px;
+
+}
+
+footer p {
+    margin: 0;
+    color: grey;
+    text-align: center;
+}
+
+.welcome-message {
+    font-size: 1rem;
+    color: black;
+    padding: 20px;
+}
+
+.welcome-message p {
+    text-align: center;
+}
+
+#nzsl-container {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 2rem auto;
+    justify-content: center;
+
+}
+
+.nzsl-card {
+    flex-basis: 20%;
+    flex-grow: 1;
+    margin: 1ex;
+    padding: 1ex;
+    background-color: white;
+    border: 2px solid black;
+    text-align: center;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.nzsl-card img {
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Heading style for each sign */
+.sign h3 {
+    font-size: 1.2rem;
+    margin-bottom: 10px;
+}
+
+/* Description style for each sign */
+.sign p {
+    font-size: 1rem;
+    color: #555;
+}
+
+#search-input-container {
+    display: flex;
+    justify-content: center;
+}
+#search-input {
+    width: 50%;
+    margin: 2rem 1rem;
+    padding: 1rem 2rem;
+    font-size: 1.5rem;
+    border: none;
+    border-radius: 20px;
+    background-color: #f8f8f8;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s, border-color 0.3s;
+    align-items: center;
+}
+
+#search-input:focus {
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.3);
+    border-color: #333;
+    outline: none;
+}
+
+#search-input::placeholder {
+    color: #ccc;
+    font-weight: bold;
+  }
+
+/* Adjust layout for smaller screens */
+@media (max-width: 768px) {
+    .sign {
+        width: 100%;
+    }
+}
