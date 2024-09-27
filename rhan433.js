@@ -158,7 +158,7 @@ document.getElementById("signInModal").querySelector("form").addEventListener("s
         });
 });
 
-// Add this function to your existing code
+
 function logout() {
     localStorage.removeItem("authData");
     document.querySelector('.user_info').innerText = "Welcome Guest!";
@@ -171,7 +171,6 @@ function logout() {
     userStatusDiv.appendChild(loginButton);
 }
 
-// Add this event listener to your logout button
 document.getElementById('logout').addEventListener('click', logout);
 
 // Retrieve Comments and handle Comment API
