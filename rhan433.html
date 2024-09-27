@@ -32,11 +32,49 @@
             </li>
           </ul>
           <div class="auth-buttons">
-            <button class="sign-in">Sign In</button>
-            <button class="register">Register</button>
+            <button id="sign-in">Sign In</button>
+            <button id="register">Register</button>
           </div>
         </nav>
       </header>
+
+      <!-- Sign in Modal -->
+      <div id="signInModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Sign In</h2>
+          <form>
+            <label for="username">Username: </label>
+            <input type="text" id="signInUsername" name="username"><br><br>
+            <label for="password">Password: </label>
+            <input type="text" id="signInPassword" name="password"><br><br>
+            <button type="submit">Sign In</button>
+          </form>
+          <div id="signInResponse" class="response-message"></div>
+        </div>
+      </div>
+
+      <!-- Register Modal -->
+
+      <div id="registerModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Register</h2>
+          <form id="registerForm">
+            <label for="username">Username: </label>
+            <input type="text" id="registerUsername" name="username" required><br><br>
+            <label for="password">Password: </label>
+            <input type="text" id="registerPassword" name="password" required><br><br>
+            <label for="password">Address: </label>
+            <input type="text" id="registerAddress" name="address"><br><br>
+            <button type="submit">Register</button>
+          </form>
+          <div id="registerResponse" class="response-message"></div>
+        </div>
+      </div>
+
+
+
 
       <section id="home-content">
         <div class="content-wrapper">
@@ -49,8 +87,6 @@
               alt="Website Logo"
               draggable="false"
             />
-            <button class="sign-in">Sign In</button>
-            <button class="register">Register</button>
           </div>
         </div>
 
@@ -60,7 +96,9 @@
             Zealand's sign language, one of the 3 offical languages across
             Aotearoa
           </p>
+          <button id="logout" style="display: none;">Logout</button>
         </div>
+        
       </section>
 
       <section id="nzsl-content">
@@ -73,18 +111,20 @@
       </section>
 
       <section id="events-content">
-        <p>Upcoming Events</p>
+        <h1 id="events-title">Upcoming Events</h1>
         <div id="eventsList"></div>
       </section>
 
       <section id="guest-book-content">
         <div id="guest-page-content">
-          <p>GUEST BOOK PAGE</p>
-          <textarea type="text" placeholder="Type to post a comment"></textarea>
-          <iframe id="comments" src="https://cws.auckland.ac.nz/nzsl/api/Comments"></iframe>
-        
+            <p>GUEST BOOK PAGE</p>
+            <textarea id="comment-text-input" type="text" placeholder="Type to post a comment"></textarea>
+            <button type="submit">Post Comment</button>
+            <div id="comments">
+                <iframe src="https://cws.auckland.ac.nz/nzsl/api/Comments" width="100%" height="500" frameborder="0"></iframe>
+            </div>
         </div>
-      </section>
+    </section>
       <footer>
         <p>Version XXXX</p>
       </footer>

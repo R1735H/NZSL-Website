@@ -7,6 +7,7 @@ function showTabHome() {
         showNoTabs();
         document.getElementById("HomeTab").style.backgroundColor = "lightgrey";
         document.getElementById("home-content").style.display = "inline";
+        document.body.style.backgroundColor = "#f8f8f8";
     }
 }
 
@@ -16,6 +17,7 @@ function showTabNZSL() {
         showNoTabs();
         document.getElementById("NZSLTab").style.backgroundColor = "lightgrey";
         document.getElementById("nzsl-content").style.display = "inline";
+        document.body.style.backgroundColor = "#f8f8f8";
     }
 }
 
@@ -25,6 +27,7 @@ function showTabEvents() {
         showNoTabs();
         document.getElementById("EventsTab").style.backgroundColor = "lightgrey";
         document.getElementById("events-content").style.display = "inline";
+        document.body.style.backgroundColor = "#f8f8f8";
     }
 }
 
@@ -34,6 +37,7 @@ function showTabGuestBook() {
         showNoTabs();
         document.getElementById("GuestBookTab").style.backgroundColor = "lightgrey";
         document.getElementById("guest-book-content").style.display = "inline";
+        document.body.style.backgroundColor = "#000000";
     }
 }
 
@@ -50,8 +54,179 @@ function showNoTabs() {
 }
 
 window.onload = function () {
-    showTabNZSL();
+    showTabHome();
 }
+
+var signInModal = document.getElementById("signInModal");
+var registerModal = document.getElementById("registerModal");
+
+var signInBtn = document.getElementById("sign-in");
+var registerBtn = document.getElementById("register");
+var logoutBtn = document.getElementById("logout");
+
+var signInClose = signInModal.querySelector(".close");
+var registerClose = registerModal.querySelector(".close");
+
+signInBtn.onclick = function () {
+    signInModal.style.display = "block";
+    registerModal.style.display = "none";
+}
+
+registerBtn.onclick = function () {
+    registerModal.style.display = "block";
+    signInModal.style.display = "none";
+}
+
+// Exist Modal if user clicks close or anywhere else other than modal
+signInClose.onclick = function () {
+    signInModal.style.display = "none";
+}
+
+registerClose.onclick = function () {
+    registerModal.style.display = "none";
+}
+
+window.onclick = function (event) {
+    if (event.target == signInModal) {
+        signInModal.style.display = "none";
+    }
+    if (event.target == registerModal) {
+        registerModal.style.display = "none";
+    }
+}
+
+
+document.getElementById("registerForm").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var username = document.getElementById("registerUsername").value;
+    var password = document.getElementById("registerPassword").value;
+    var address = document.getElementById("registerAddress").value;
+    let registerMessage = document.getElementById("registerResponse");
+
+    var userData = { username, password, address };
+    var jsonString = JSON.stringify(userData);
+
+    // POST the data to server
+    fetch('https://cws.auckland.ac.nz/nzsl/api/Register',
+        {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: jsonString
+        }).then(res => res.text())
+        .then(data => {
+            registerMessage.innerText = data;
+        })
+        .catch(err => {
+            console.log(err);
+            registerMessage.innerText = err;
+        }
+        );
+});
+
+document.getElementById("signInModal").querySelector("form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    var username = document.getElementById("signInUsername").value;
+    var password = document.getElementById("signInPassword").value;
+    let signInMessage = document.getElementById("signInResponse");
+    const authData = window.btoa(username + ":" + password);
+
+    fetch("https://cws.auckland.ac.nz/nzsl/api/TestAuth", {
+        method: 'GET',
+        headers: {
+            "Authorization": "Basic " + authData
+        }
+    })
+        .then(response => response.text())
+        .then(data => {
+
+            // Store the credentials in localStorage
+            localStorage.setItem("authData", authData);
+            signInMessage.innerText = data;
+            document.querySelector(".auth-buttons").innerText = "Logged in as: " + username;
+            
+            logoutBtn.style.display = "inline-block";
+            signInBtn.style.display = "none";
+            registerBtn.style.display = "none";
+
+            signInModal.style.display = "none";
+        })
+        .catch(error => {
+            console.error(error);
+            signInMessage.innerText = error;
+        });
+});
+
+// Add this function to your existing code
+function logout() {
+    localStorage.removeItem("authData");
+    document.querySelector('.user_info').innerText = "Welcome Guest!";
+    document.querySelector('.user_status').innerText = "(Not Logged-in)";
+    const userStatusDiv = document.querySelector('.user_status');
+    userStatusDiv.innerHTML = '';
+    const loginButton = document.createElement('button');
+    signInBtn.innerText = "Sign In";
+    signInBtn.id = "sign-in";
+    userStatusDiv.appendChild(loginButton);
+}
+
+// Add this event listener to your logout button
+document.getElementById('logout').addEventListener('click', logout);
+
+// Retrieve Comments and handle Comment API
+document.addEventListener('DOMContentLoaded', function () {
+    const commentInput = document.getElementById('comment-text-input');
+    const commentButton = document.querySelector('#guest-book-content button[type="submit"]');
+
+    commentButton.addEventListener('click', handleCommentSubmit);
+
+    function handleCommentSubmit(event) {
+        event.preventDefault();
+
+        const comment = commentInput.value.trim();
+
+        const authData = localStorage.getItem("authData");
+        if (!authData) {
+            signInBtn.click();
+            return;
+        }
+
+        postComment(comment, authData);
+        commentInput.value = ''; // Clear the input after submission
+    }
+
+    function postComment(comment, authData) {
+        fetch(`https://cws.auckland.ac.nz/nzsl/api/Comment?comment=${encodeURIComponent(comment)}`, {
+            method: 'POST',
+            headers: {
+                "Authorization": "Basic " + authData,
+                'Content-Type': 'text/plain'
+            }
+        })
+        .then(res => {
+            if (res.ok) {
+                refreshComments();
+                return res.text();
+            } 
+            if (res.status === 401) {
+                signInBtn.click();
+            } else {
+                throw new Error("Comment not added");
+            }
+        })
+        .catch(err => {
+            console.error("Error:", err);
+        });
+    }
+
+    function refreshComments() {
+        let iframe = document.querySelector('#comments iframe');
+        iframe.src = iframe.src; // Refresh comments
+    }
+});
+
+
 
 // GetVersion API
 async function GetVersion() {
@@ -163,7 +338,7 @@ function searchItems(item) {
 
                 items.append(signContainer);
             });
-            console.log(results);
+            // console.log(results);
         })
         .catch(error => console.log(error));
 };
@@ -188,7 +363,7 @@ async function fetchEvent(id) {
     try {
         const response = await fetch(`https://cws.auckland.ac.nz/nzsl/api/Event/${id}`);
         const eventData = await response.text();
-        console.log(eventData);
+        // console.log(eventData);
         const events = parseIcal(eventData);
 
         events.forEach(event => {
@@ -212,9 +387,12 @@ async function fetchEvent(id) {
             const parsedEndDate = parseEventDate(event.DTEND);
             eventEndDate.textContent = `Ends: ${parsedEndDate.toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })}`;
 
+            const downloadLink = document.createElement('a');
+            downloadLink.href = `https://cws.auckland.ac.nz/nzsl/api/Event/${id}`;
+            downloadLink.target = '_blank';
+            downloadLink.textContent = 'Download ICal file';
 
-
-            eventContainer.append(eventSummary, eventDescription, eventLocation, eventStartDate, eventEndDate);
+            eventContainer.append(eventSummary, eventDescription, eventLocation, eventStartDate, eventEndDate, downloadLink);
             document.getElementById('eventsList').appendChild(eventContainer);
         });
     } catch (error) {
@@ -251,18 +429,10 @@ function parseIcal(icalString) {
             event[key] = value;
         }
     });
-    console.log(events);
+    // console.log(events);
 
     return events;
 }
-
-
-//Set font color of comments iframe
-
-const iframe = document.getElementById('comments-iframe');
-iframe.onload = function () {
-    iframe.contentWindow.postMessage('set-font-color', 'aqua'); // send message to iframe
-};
 
 getEventCount();
 GetVersion();
