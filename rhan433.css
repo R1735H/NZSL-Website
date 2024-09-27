@@ -216,3 +216,10 @@ footer p {
         width: 100%;
     }
 }
+
+
+#guest-page-content {
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+}

@@ -153,6 +153,8 @@ function searchItems(item) {
                 const signId = document.createElement('img');
                 signId.src = `https://cws.auckland.ac.nz/nzsl/api/SignImage/${item.id}`;
                 signId.alt = item.description;
+                signId.width = 100;
+                signId.height = 100;
 
                 const signDescription = document.createElement('p');
                 signDescription.textContent = item.description;
@@ -174,8 +176,7 @@ async function getEventCount() {
         const response = await fetch("https://cws.auckland.ac.nz/nzsl/api/EventCount");
         const eventCount = await response.text();
         const count = parseInt(eventCount);
-        console.log(count);
-        for (let i = 0; i <= count; i++) {
+        for (let i = 0; i < count; i++) {
             fetchEvent(i);
         }
     } catch (error) {
@@ -201,7 +202,6 @@ async function fetchEvent(id) {
             eventDescription.textContent = event.DESCRIPTION;
 
             const eventLocation = document.createElement('p');
-            console.log(eventLocation);
             eventLocation.textContent = `Location: ${event.LOCATION}`;
 
             const eventStartDate = document.createElement('p');
@@ -212,21 +212,7 @@ async function fetchEvent(id) {
             const parsedEndDate = parseEventDate(event.DTEND);
             eventEndDate.textContent = `Ends: ${parsedEndDate.toLocaleString('en-NZ', { timeZone: 'Pacific/Auckland' })}`;
 
-            const icsContent = `BEGIN:VCALENDAR
-VERSION:2.0
-BEGIN:VEVENT
-DTSTART:${event.DTSTART}
-DTEND:${event.DTEND}
-SUMMARY:${event.SUMMARY}
-DESCRIPTION:${event.DESCRIPTION}
-LOCATION:${event.LOCATION}
-END:VEVENT
-END:VCALENDAR`;
-            const dataUri = `data:text/calendar;charset=utf-8,${encodeURIComponent(icsContent)}`;
-            const link = document.createElement('a');
-            link.href = dataUri;
-            link.download = `${event.SUMMARY}.ics`;
-            link.textContent = 'Download ICS';
+
 
             eventContainer.append(eventSummary, eventDescription, eventLocation, eventStartDate, eventEndDate);
             document.getElementById('eventsList').appendChild(eventContainer);
@@ -259,14 +245,24 @@ function parseIcal(icalString) {
             event = {};
         } else if (line.startsWith('END:VEVENT')) {
             events.push(event);
+            event = {};
         } else if (line.includes(':')) {
             const [key, value] = line.split(':');
             event[key] = value;
         }
     });
+    console.log(events);
 
     return events;
 }
+
+
+//Set font color of comments iframe
+
+const iframe = document.getElementById('comments-iframe');
+iframe.onload = function () {
+    iframe.contentWindow.postMessage('set-font-color', 'aqua'); // send message to iframe
+};
 
 getEventCount();
 GetVersion();

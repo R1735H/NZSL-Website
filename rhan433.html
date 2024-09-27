@@ -4,21 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>NZSL - Where you learn</title>
-    <link rel="icon" type="image/x-icon" href="https://cws.auckland.ac.nz/nzsl/api/Logo">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="https://cws.auckland.ac.nz/nzsl/api/Logo"
+    />
     <link rel="stylesheet" href="rhan433.css" />
     <script src="rhan433.js" defer="defer"></script>
   </head>
   <body>
-    <main>  
-
+    <main>
       <header>
         <nav>
           <ul class="nav-links">
-            <img id="imgLogo" src="https://cws.auckland.ac.nz/nzsl/api/Logo" alt="Website Logo" style="width: 30px; height: auto;" draggable="false"/>
+            <img
+              id="imgLogo"
+              src="https://cws.auckland.ac.nz/nzsl/api/Logo"
+              alt="Website Logo"
+              style="width: 30px; height: auto"
+              draggable="false"
+            />
             <li><a id="HomeTab" onclick="showTabHome();">Home</a></li>
             <li><a id="NZSLTab" onclick="showTabNZSL();">NZSL</a></li>
             <li><a id="EventsTab" onclick="showTabEvents();">Events</a></li>
-            <li><a id="GuestBookTab" onclick="showTabGuestBook();">Guest Book</a></li>
+            <li>
+              <a id="GuestBookTab" onclick="showTabGuestBook();">Guest Book</a>
+            </li>
           </ul>
           <div class="auth-buttons">
             <button class="sign-in">Sign In</button>
@@ -32,7 +43,12 @@
           <h1>NZSL</h1>
           <h2>New Zealand Sign Language</h2>
           <div class="auth-buttons">
-            <img id="homeLogo" src="https://cws.auckland.ac.nz/nzsl/api/Logo" alt="Website Logo" draggable="false"/>
+            <img
+              id="homeLogo"
+              src="https://cws.auckland.ac.nz/nzsl/api/Logo"
+              alt="Website Logo"
+              draggable="false"
+            />
             <button class="sign-in">Sign In</button>
             <button class="register">Register</button>
           </div>
@@ -48,18 +64,26 @@
       </section>
 
       <section id="nzsl-content">
-        <input type="text" id="search-input" placeholder="Search by shown description">
+        <input
+          type="text"
+          id="search-input"
+          placeholder="Search by shown description"
+        />
         <div id="nzsl-container"></div>
       </section>
 
       <section id="events-content">
-        <p> Upcoming Events</p>
+        <p>Upcoming Events</p>
         <div id="eventsList"></div>
       </section>
 
-
       <section id="guest-book-content">
-        <p> GUEST BOOK PAGE</p>
+        <div id="guest-page-content">
+          <p>GUEST BOOK PAGE</p>
+          <textarea type="text" placeholder="Type to post a comment"></textarea>
+          <iframe id="comments" src="https://cws.auckland.ac.nz/nzsl/api/Comments"></iframe>
+        
+        </div>
       </section>
       <footer>
         <p>Version XXXX</p>
