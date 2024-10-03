@@ -1,0 +1,11 @@
+/* img[src="rhan433.svg"] {
+    width: auto;
+    height: 100%;
+} */
+
+
+#svgimg {
+    border: green solid;
+    width: 100vw;
+    height: 100vh;
+}
