@@ -1,11 +1,40 @@
-/* img[src="rhan433.svg"] {
-    width: auto;
-    height: 100%;
-} */
+/* 
+    Made by Ritesh Hanmanthu, 
+*/
 
 
 #svgimg {
-    border: green solid;
     width: 100vw;
     height: 100vh;
+}
+
+#header {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #4A90E2;
+    color: white;
+    padding: 10px 20px;
+    border-bottom: 2px solid #3B78B6;
+}
+
+.header-button {
+    background-color: #fff;
+    color: #4A90E2;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 14px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.header-button:hover {
+    background-color: #e2e2e2;
+    transform: translateY(-2px);
+}
+
+.header-button:active {
+    transform: translateY(0);
 }

@@ -1,18 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SVG Assignment</title>
     <script src="rhan433.js" defer="defer"></script>
     <link rel="stylesheet" href="rhan433.css" />
-</head>
-<body>
 
-    <!-- <img src="https://cws.auckland.ac.nz/nzsl/api/Logo" style="opacity: 1; position: absolute; top: 0px; left: 0px;" /> -->
-    <img id="svgimg" src="rhan433.svg" style="opacity: 1; position: absolute; top: 0px; left: 0px;"/>
+    <!-- Made by Ritesh Hanmanthu, 
+    -->
+  </head>
+  <body>
+    
+    <header id="header">
+        <div id="button-container">
+            <button type="button" id="part1btn" class="header-button" onclick="ShowTabP1()">Part 1 - SVG Logo</button>
+            <button type="button" id="part2btn" class="header-button" onclick="ShowTabP2()">Part 2 - Log Graph</button>
+        </div>
+    </header>
+    <div id="part1-img">
+      <!-- <img src="https://cws.auckland.ac.nz/nzsl/api/Logo" style="opacity: 0.4;" /> -->
+      <img id="svgimg" src="rhan433.svg" style="opacity: 1;"/>
+    </div>
 
+    <div id="part2-log">
+        <svg id="visitLogSvg" viewBox="30 30 600 450" preserveAspectRatio="xMinYMin meet"></svg>
+    </div>
+
+    <footer style="opacity: 0.3;">Ritesh Hanmanthu</footer>
     
-    
-</body>
+  </body>
 </html>

@@ -7,7 +7,7 @@ function showTabHome() {
         showNoTabs();
         document.getElementById("HomeTab").style.backgroundColor = "lightgrey";
         document.getElementById("home-content").style.display = "inline";
-        document.body.style.backgroundColor = "#f8f8f8";
+        document.body.style.backgroundColor = "black";
     }
 }
 
