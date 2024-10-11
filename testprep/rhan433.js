@@ -1,7 +1,7 @@
 let currentTab = "";
 
 function showDailyTab() {
-    if (currentTab != "daily") {
+    if (currentTab!="daily") {
         currentTab = "daily";
         showNoTabs();
         document.getElementById("daily").style.backgroundColor = "lightgrey";
@@ -10,7 +10,7 @@ function showDailyTab() {
 }
 
 function showInfoTab() {
-    if (currentTab != "info") {
+    if (currentTab!="info") {
         currentTab = "info";
         showNoTabs();
         document.getElementById("info").style.backgroundColor = "lightgrey";
@@ -19,7 +19,7 @@ function showInfoTab() {
 }
 
 function showStatTab() {
-    if (currentTab != "stat") {
+    if (currentTab!="stat") {
         currentTab = "stat";
         showNoTabs();
         document.getElementById("stat").style.backgroundColor = "lightgrey";
@@ -38,7 +38,7 @@ function showNoTabs() {
     document.getElementById("Statistician").style.display = "none";
 }
 
-window.onload = function () {
+window.onload = function() {
     showDailyTab();
 }
 
@@ -52,18 +52,18 @@ async function versionAPI() {
     const data = await res.json();
     const footerText = document.querySelector("footer p");
     footerText.textContent = `Version ${data}`;
-
+    
 }
 
 
 async function caseCounts() {
     const res = await fetch("https://cws.auckland.ac.nz/Qz2021JGC/api/CaseCounts", {
-        headers: {
-            "Accept": "application/json",
+        headers : {
+            "Accept" : "application/json",
         }
     })
 
-
+    
     const data = await res.json();
 
     const data2return = Object.entries(data);
@@ -77,7 +77,7 @@ async function caseCounts() {
         } else {
             tablehtml += `<tr class="test2"><td>${key}</td><td>${value}</td></tr>`;
         }
-
+       
 
         odd = !odd;
     })
@@ -92,55 +92,55 @@ async function caseCounts() {
 }
 
 async function getPerson() {
-    const svgurl = "https://cws.auckland.ac.nz/Qz2021JGC/api/PersonIcon";
     try {
-        // Fetch the SVG for the person icon
-        const response = await fetch(svgurl);
-        if (!response.ok) {
-            throw new Error(`Response status: ${response.status}`);
+        const res = await fetch("https://cws.auckland.ac.nz/Qz2021JGC/api/PersonIcon");
+
+        if (!res.ok) {
+            throw new Error(`Response status: ${res.status}`);
         }
-        const svg = await response.text(); // Fetch the raw SVG text
 
-        // Fetch the case counts data
-        const tidytable = await caseCounts(); // Assuming caseCounts returns data after populating the table
+        const svg = await res.text();
+        console.log(svg);
 
-        const tendays = tidytable.slice(-10); // Last 10 days of case data
+        const tbl = await caseCounts();
 
-        let svgwidth = 400;
-        let svgheight = 400;
-        let headerY = 15;
-        let scaleY = headerY + 25;
-        let scaleX = 80;
+        const tenDays = tbl.slice(-10);
+        console.log(tenDays);
+        
+        svgwidth = 400;
+        svgheight = 400;
+        headerY = 15;
+        scaleY = headerY + 25;
+        scaleX = 80;
 
-        let svgContainer = document.getElementById('svgContainer');
-        svgContainer.innerHTML = svg; // Append the SVG person icon to the container
-        svgContainer.innerHTML += `<text x="0" y="${headerY}" class="small">Last Ten days at a Glance</text>`;
+        svgContainer = document.getElementById("svgContainer");
+        svgContainer.innerHTML += svg;
+        svgContainer.innerHTML += `<text x="0" y="${headerY}" class="small">Last 10 Days at a glance</text>`;
 
-        tendays.forEach(([date, value]) => {
-            const whole = Math.floor(value / 10); // Whole person icons to show
-            const percentage = value % 10; // Partial person icon
+        tenDays.forEach(([date, value]) => {
+            const whole = Math.floor(value/10);
+            const percentage = value % 10;
+            console.log(value, whole, percentage);
 
-            svgContainer.innerHTML += `<text x="0" y="${scaleY}">${date}</text>`; // Add date text
+            svgContainer.innerHTML += `<text x="0" y="${scaleY}">${date}</text>`;
 
-            // Add whole person icons
-            for (let i = 0; i < whole; i++) {
-                svgContainer.innerHTML += `<use href="#person" x="${scaleX + (i * 20)}" y="${scaleY - 15}" width="20" height="20"></use>`;
+            for (i = 0; i < whole; i++) {
+                svgContainer.innerHTML += `<use href="#person" x="${scaleX + (i*20)}" y="${scaleY-15}" width="20" height="20"></use>`;
             }
 
-            // Add partial person icon using clip-path
-            svgContainer.innerHTML += `
-                <clipPath id="myClip${scaleY}">
-                    <rect x="0" y="0" width="${((percentage / 10) * 20) + 1}" height="100" />
-                </clipPath>
-                <use href="#person" x="${scaleX + whole * 20}" y="${scaleY - 15}" width="20" height="20" clip-path="url(#myClip${scaleY})"></use>`;
-
-            scaleY += 20; // Move the Y scale down for the next row
-        });
+            svgContainer.innerHTML += 
+            `<clipPath id="myClip${scaleY}">
+            <rect x="0" y="0" width="${((percentage / 10) * 20) + 1}" height="100" />
+            </clipPath>
+            <use href="#person" x="${scaleX + i * 20}" y="${scaleY - 15}" width="20" height="20" clip-path="url(#myClip${scaleY})"></use>`;
+            
+            scaleY += 20;
+        }); 
+        
     } catch (error) {
         console.error(error.message);
     }
 }
-
 
 getPerson();
 versionAPI();
