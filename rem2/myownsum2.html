@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+
+    <script>
+
+        async function sum2() {
+
+            const a = document.getElementById("a");
+            const b = document.getElementById("b");
+
+
+            const creds = btoa("user335:password335"); 
+
+            try {
+                const req = await fetch('https://www.cws.auckland.ac.nz/AddTwoSvc/Api/SumAuth', {
+                    
+                    method : "POST",
+                    headers : {
+                        "Content-type" : "application/json",
+                        "Authorization": "Basic " + creds,
+                    },
+                    body : JSON.stringify(
+                        {
+                            "a": Number(a.value),
+                            "b": Number(b.value),
+                        })
+                })
+                // .then(res => res.json())
+                // .then(result =>  alert(result))
+
+                const response = await req.json();
+                
+                if (!req.ok) {
+                    throw new Error(`Response Status: ${req.status}`)
+                }
+
+                document.getElementById("result").innerHTML = response;
+            } catch (error) {
+                console.error(error.message);
+                document.getElementById("result").innerHTML = error.message;
+            }
+        }
+
+    </script>
+</head>
+<body>
+
+    <h2>Add 2 Program</h2>
+    <br>
+
+    <div>
+        <input type="number" id="a" placeholder="Enter a" />
+        <input type="number" id="b" placeholder="Enter a" />    
+    </div>
+    <button id="submit" onclick="sum2()">Calculate</button>
+    <p id="result"></p>
+</body>
+</html>

@@ -59,12 +59,62 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Document</title>
+  <title>Activity Log Chart</title>
+  <script defer="defer" src="temp.js"></script>
+  <style>
+    .chart {
+      width: 1000px;
+      height: 300px;
+    }
+    svg {
+      border: 1px solid #ccc;
+    }
+    .axis-labels {
+      font-size: 12px;
+      fill: #333;
+    }
+    polyline {
+      fill: none;
+      stroke-width: 2;
+    }
+    .visits-polyline {
+      stroke: blue;
+    }
+    .unique-visits-polyline {
+      stroke: green;
+    }
+  </style>
 </head>
 <body>
-  <svg xmlns="http://www.w3.org/2000/svg" width="1034" height="512">
-    <rect width="1024" height="512" fill="#D101027" />
-    
+  <div>
+    <p><strong>Min Value: </strong><span id="minValue"></span></p>
+    <p><strong>Max Value: </strong><span id="maxValue"></span></p>
+    <p><strong>Start Date: </strong><span id="startDate"></span></p>
+    <p><strong>End Date: </strong><span id="endDate"></span></p>
+    <p><strong id="visits"></strong></p>
+    <p><strong id="uniqueVisits"></strong></p>
+  </div>
+
+  <svg class="chart" viewBox="0 0 1000 300" xmlns="http://www.w3.org/2000/svg">
+    <!-- Polyline for visits -->
+    <polyline id="visitsPolyline" class="visits-polyline" points=""></polyline>
+    <!-- Polyline for unique visits -->
+    <polyline id="uniqueVisitsPolyline" class="unique-visits-polyline" points=""></polyline>
+
+    <!-- X and Y axis labels (optional) -->
+    <text class="axis-labels" x="50" y="290">Start Date</text>
+    <text class="axis-labels" x="900" y="290">End Date</text>
+    <text class="axis-labels" x="10" y="30">Max Visits</text>
+    <text class="axis-labels" x="10" y="270">Min Visits</text>
   </svg>
+
+  <script>
+    async function FetchActivityLog() {
+      // Your code here
+    }
+
+    // Fetch the data and update the graph
+    FetchActivityLog();
+  </script>
 </body>
 </html>

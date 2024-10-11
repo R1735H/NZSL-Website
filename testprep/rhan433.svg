@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 500">
+  <g clip-path="url(#part)">
+    <circle cx="200" cy="100" r="90" fill="black" />
+    <defs>
+      <mask id="Mask">
+        <rect width="400" height="500" fill="white" />
+        <circle cx="200" cy="100" r="120" fill="black" />
+      </mask>
+    </defs>
+    <ellipse cx="200" cy="500" rx="180" ry="320" fill="transparent" stroke="black" stroke-width="30px"
+      mask="url(#Mask)" />
+  </g>
+
+  <clipPath id="part">
+    <rect width="320" height="500" />
+  </clipPath>
+
+
+</svg>
+<!-- Do masking in the morning-->

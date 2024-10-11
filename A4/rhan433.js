@@ -34,7 +34,6 @@ window.onload = function () {
 
 
 
-
 const svg = document.getElementById('visitLogSvg');
 const padding = 70;
 const width = 660;
@@ -47,7 +46,6 @@ fetch('https://cws.auckland.ac.nz/nzsl/api/Log')
     .then(response => response.json())
     .then(data => {
         const logData = data;
-        // console.log(logData);
         const maxVisits = Math.max(...logData.map(d => d.visits));
         const minVisits = Math.min(...logData.map(d => d.visits));
         const maxUnique = Math.max(...logData.map(d => d.uniqueVisits));
@@ -80,27 +78,22 @@ fetch('https://cws.auckland.ac.nz/nzsl/api/Log')
         rect.setAttribute('fill', '#a9a9a9');
         svg.appendChild(rect);
 
-        // Paths for visits and uniqueVisits (within clipPath)
-        let visitsPath = `M ${scaleX(0)} ${scaleY(logData[0].visits)}`;
-        let uniqueVisitsPath = `M ${scaleX(0)} ${scaleY(logData[0].uniqueVisits)}`;
+        // Points for visits and unique visits
+        let visitsPoints = logData.map((d, i) => `${scaleX(i)},${scaleY(d.visits)}`).join(' ');
+        let uniqueVisitsPoints = logData.map((d, i) => `${scaleX(i)},${scaleY(d.uniqueVisits)}`).join(' ');
 
-        for (let i = 1; i < logData.length; i++) {
-            visitsPath += ` L ${scaleX(i)} ${scaleY(logData[i].visits)}`;
-            uniqueVisitsPath += ` L ${scaleX(i)} ${scaleY(logData[i].uniqueVisits)}`;
-        }
-
-        // The visits path (clipped)
-        const visitsLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        visitsLine.setAttribute('d', visitsPath);
+        // The visits polyline (clipped)
+        const visitsLine = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        visitsLine.setAttribute('points', visitsPoints);
         visitsLine.setAttribute('fill', 'none');
         visitsLine.setAttribute('stroke', 'red');
         visitsLine.setAttribute('stroke-width', 2);
         visitsLine.setAttribute('clip-path', 'url(#clip)');
         svg.appendChild(visitsLine);
 
-        // The unique visits path (clipped)
-        const uniqueVisitsLine = document.createElementNS('http://www.w3.org/2000/svg', 'path');
-        uniqueVisitsLine.setAttribute('d', uniqueVisitsPath);
+        // The unique visits polyline (clipped)
+        const uniqueVisitsLine = document.createElementNS('http://www.w3.org/2000/svg', 'polyline');
+        uniqueVisitsLine.setAttribute('points', uniqueVisitsPoints);
         uniqueVisitsLine.setAttribute('fill', 'none');
         uniqueVisitsLine.setAttribute('stroke', 'green');
         uniqueVisitsLine.setAttribute('stroke-width', 2);
@@ -148,11 +141,11 @@ fetch('https://cws.auckland.ac.nz/nzsl/api/Log')
             text.setAttribute('font-family', 'Courier New');
             text.textContent = Math.round(yValue);
             svg.appendChild(text);
-        });
+        })  ;
 
         // Legend
         const legendGroup = document.createElementNS('http://www.w3.org/2000/svg', 'g');
-        legendGroup.setAttribute('transform', `translate(${padding}, ${height - 20})`)
+        legendGroup.setAttribute('transform', `translate(${padding}, ${height - 20})`);
 
         const legendTitle = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         legendTitle.setAttribute('font-size', '12');
@@ -198,10 +191,8 @@ fetch('https://cws.auckland.ac.nz/nzsl/api/Log')
 
         svg.appendChild(legendGroup);
 
-
         // Coordinates at the bottom of the SVG
         const visitList = logData.map(d => d.visits).join(',');
-        // console.log(visitList);
         const coordinatesText = document.createElementNS('http://www.w3.org/2000/svg', 'text');
         coordinatesText.setAttribute('x', width / 2);
         coordinatesText.setAttribute('y', height + 10);
@@ -219,4 +210,6 @@ fetch('https://cws.auckland.ac.nz/nzsl/api/Log')
         uniqueCoordinatesText.textContent = uniqueVisitList || "Error";
         svg.appendChild(uniqueCoordinatesText);
     })
-    .catch(error => console.error('Error fetching the log data:', error));
+    .catch(error => {
+        console.error('Error fetching data:', error);
+    });

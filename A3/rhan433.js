@@ -7,7 +7,7 @@ function showTabHome() {
         showNoTabs();
         document.getElementById("HomeTab").style.backgroundColor = "lightgrey";
         document.getElementById("home-content").style.display = "inline";
-        document.body.style.backgroundColor = "black";
+        document.body.style.backgroundColor = "white";
     }
 }
 
@@ -19,7 +19,7 @@ function showTabNZSL() {
         document.getElementById("nzsl-content").style.display = "inline";
         document.body.style.backgroundColor = "#f8f8f8";
     }
-}
+};
 
 function showTabEvents() {
     if (currentTab != "EventsTab") {
@@ -29,7 +29,7 @@ function showTabEvents() {
         document.getElementById("events-content").style.display = "inline";
         document.body.style.backgroundColor = "#f8f8f8";
     }
-}
+};
 
 function showTabGuestBook() {
     if (currentTab != "GuestBookTab") {
@@ -39,7 +39,7 @@ function showTabGuestBook() {
         document.getElementById("guest-book-content").style.display = "inline";
         document.body.style.backgroundColor = "#000000";
     }
-}
+};
 
 function showNoTabs() {
     document.getElementById("HomeTab").style.backgroundColor = "transparent";
@@ -51,11 +51,9 @@ function showNoTabs() {
     document.getElementById("nzsl-content").style.display = "none";
     document.getElementById("events-content").style.display = "none";
     document.getElementById("guest-book-content").style.display = "none";
-}
+};
 
-window.onload = function () {
-    showTabHome();
-}
+
 
 var signInModal = document.getElementById("signInModal");
 var registerModal = document.getElementById("registerModal");
@@ -171,7 +169,7 @@ function logout() {
     userStatusDiv.appendChild(loginButton);
 }
 
-document.getElementById('logout').addEventListener('click', logout);
+document.getElementById('logout').addEventListener('click', logout());
 
 // Retrieve Comments and handle Comment API
 document.addEventListener('DOMContentLoaded', function () {
